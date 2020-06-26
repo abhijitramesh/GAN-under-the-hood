@@ -1,7 +1,5 @@
 # Generative Adversarial Networks
 
-Created: Jun 23, 2020
-Created by: Abhijit Ramesh
 
 # Applications of GANs
 
