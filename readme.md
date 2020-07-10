@@ -104,3 +104,91 @@ The goal of the algorithm is to reach a local minima or a minima but this does n
 For GANs the two different players the Generator and the Discriminator both have there own costs.
 
 The generator wants to minimise the value function and the discriminator wants to maximise the value functions.
+
+# Tips for training GANs
+
+- Choose good architecture
+
+If we are planning on making a GAN which is used to generate hand-written digits we can use a fully connected architecture.
+
+---
+
+## Fully connected layers
+
+one of the best design choices when it comes to a fully connected network is that most of the layers include matrix multiplication.
+
+The generator and discriminator have one hidden layer to ensure that both the models can have a universal approximate property and can represent any probability distribution.
+
+---
+
+## Leaky Relu
+
+They are popular for GANs as they are very use-full for making gradients flow through the entire model. These can be used in any models but they are very useful in GANs since the only way for the generator to learn is by the gradient flowing though the discriminator.
+
+---
+
+## Hyperbolic Tangent
+
+The output of the generator is prescribed to be a hyperbolic tangent so that the values are scaled between -1 and +1
+
+---
+
+## Sigmoid
+
+for the output of the discriminator is prescribed to be sigmoid since we need a probability to be the output.
+
+Unlike other machine learning models GANs need to neural networking working together to produce an output and hence we need two simultaneous optimisations.
+
+---
+
+## Two simultaneous Optimisations
+
+we define two separate losses for the discriminator and other for the generator. 
+
+then we use two optimisers simultaneously to decrease the losses for each.
+
+Adam is the a popular choice for optimiser.
+
+for the discriminator we need to make a classifier which gives 0 when the predicted value is fake and 1 when it is real.
+
+Here we can use a simple cross entropy loss to calculate our loss.
+
+One of the common mistakes made while calculating the loss is using the stable version of cross entropy loss which is calculated using the logits. Which takes the value calculated by the discriminator right before the sigmoid functions.
+
+---
+
+## Discriminator Loss
+
+in order to avoid rounding error what we can do is to go a gan specific label normalisation by multiplying the labels with a very close value to 1 like 0.9
+
+This would allow the discriminator to generalise better and avoid making extreme predictions while extrapolating.
+
+## Generator Loss
+
+For this we use the same stable cross entropy loss of the discriminator but with the labels flipped what this does is give us the advantage of increasing the log probability.
+
+Negative D loss is commonly used for this.
+
+What this does is the generator maximise the loss for the discriminator. This is good for visualisation but is not good in practice.
+
+The gradient of Dloss is 0 when discriminator is winning because this would result in maximising the cross entropy.
+
+---
+
+# Scaling these GANs
+
+So far we have been discussing based on fully connected network but in order to scale these GANs we need to consider using convolution and replace the fully connected networks.
+
+In normal cases we use a convolutional neural network we take an image with three dimensions representing three colour channels of red blue and green then we move on to passing it through convolutional and pooling layers we end up with short and narrow feature maps.
+
+but this is for a classifier for using in a generator we need to do the opposite.
+
+We need to increase the size of the feature maps as we are passing though the CNN.
+
+The DC project does this by using convolutional transpose ops with stride greater than one.
+
+This means when we compute the convolution when we move the stride by one in input we move by two or more in the output kernel.
+
+We end up my using batch normalisation, the dc gan ask us to apply batch normalisation to every layer except the output of the generator and input of discriminator.
+
+---
