@@ -192,3 +192,8 @@ This means when we compute the convolution when we move the stride by one in inp
 We end up my using batch normalisation, the dc gan ask us to apply batch normalisation to every layer except the output of the generator and input of discriminator.
 
 ---
+
+# MNIST GANs
+[Notebook MNIST](https://github.com/abhijitramesh/GAN-under-the-hood/blob/master/MNIST_GAN.ipynb)
+
+Checkout my implementation on MNIST GAN where I teach the generator to make real images provided with at latent space vector and the discriminator is given the data from the generator as well as the MNIST dataset which provides feedback to the generator to help it generate images closer to real data. 
