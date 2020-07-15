@@ -234,8 +234,21 @@ Here we use batch normalisation and ReLU but at the end before we get the image 
 
 ![assets/Screenshot_2020-07-15_at_9.08.15_AM.png](assets/Screenshot_2020-07-15_at_9.08.15_AM.png)
 
----
+
 
 ## Batch Normalisation
 
 It's called "batch" normalization because, during training, we normalize each layer's inputs by using the mean and standard deviation (or variance) of the values in the current batch. These are sometimes called the batch statistics.
+
+[Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift.](https://arxiv.org/pdf/1502.03167.pdf)
+
+The idea is that instead of normalising the input to the neural network we normalise the input layer to the network.
+
+Checkout this [notebook](https://github.com/abhijitramesh/GAN-under-the-hood/blob/master/Batch_Normalization.ipynb) to see the benchmark of batch normalisation 
+
+### Conclusion on Batch Normalisation n
+
+- We have to add batch normalisation in the init function
+- Batch Normalisation does not use bias so if we are using a cnn we should put bias=False
+- in PyTorch we can say "ok boomer" and just use BatchNorm1d to take care of the math.
+- We should call the batch normalisation the best way to go would be layer → batch norm → activation function
