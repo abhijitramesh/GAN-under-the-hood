@@ -252,3 +252,8 @@ Checkout this [notebook](https://github.com/abhijitramesh/GAN-under-the-hood/blo
 - Batch Normalisation does not use bias so if we are using a cnn we should put bias=False
 - in PyTorch we can say "ok boomer" and just use BatchNorm1d to take care of the math.
 - We should call the batch normalisation the best way to go would be layer → batch norm → activation function
+
+
+## Implementation
+
+[Notebook](https://github.com/abhijitramesh/GAN-under-the-hood/blob/master/DCGAN.ipynb) on step by step implementaiton of the DCGAN
