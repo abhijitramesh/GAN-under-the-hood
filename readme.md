@@ -334,3 +334,7 @@ We not only map the input images to outputs but also backwards this would give u
 
 For example if we are translating from english to french and if we translate french back to english we should get the same result.
 
+--
+ # Cycle Consistency Loss
+ 
+ One of the most critical loss is the Cycle consistency loss. That we can achieve the original image using another generator and the difference between the initial and last image should be as small as possible.
