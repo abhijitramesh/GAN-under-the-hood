@@ -257,3 +257,80 @@ Checkout this [notebook](https://github.com/abhijitramesh/GAN-under-the-hood/blo
 ## Implementation
 
 [Notebook](https://github.com/abhijitramesh/GAN-under-the-hood/blob/master/DCGAN.ipynb) on step by step implementaiton of the DCGAN
+
+# Pix2Pix and Cycle GANs
+
+# Image to Image Translation
+
+This is a GAN model which takes in an Image as input and then transform the same image into another image for example we can give the model a sketch and then it can convert this into a painting or even an animation. Such models helps us for tasks like auto colouring a gray scale image etc..
+
+---
+
+# Pix2Pix
+
+These are special type of GANs which takes in a sketch as input and generate an Image as output
+
+Similar to every GANs these networks also have two parts
+
+---
+
+# Pix2Pix Generator
+
+For a normal GAN the input to the neural network is a latent vector but for a pix2pix generator the input is actually an image and then the output is also another image.
+
+So how do we do this ?
+
+Well the answer is pretty much what you have guessed we need to encode the image as a vector and then feed this to the generator.
+
+Here we do something similar to a feature mapping, mapping an image to another image.
+
+![Pix2Pix%20and%20Cycle%20GANs%20eadf4e44ff8c4f41a9fdb7018f6fdaf2/Screenshot_2020-07-17_at_12.54.17_PM.png](assets/Screenshot_2020-07-17_at_12.54.17_PM.png)
+
+First we encode the image that we have and this would be vector similar to out latent vector but would contain feature level representation of the images
+
+![Pix2Pix%20and%20Cycle%20GANs%20eadf4e44ff8c4f41a9fdb7018f6fdaf2/Screenshot_2020-07-17_at_12.57.51_PM.png](assets/Screenshot_2020-07-17_at_12.57.51_PM.png)
+
+The encoder should contain convolutional layers with match normalisation and ReLU as activation function.
+
+The output of this would be our feature level representation.
+
+![Pix2Pix%20and%20Cycle%20GANs%20eadf4e44ff8c4f41a9fdb7018f6fdaf2/Screenshot_2020-07-17_at_12.59.57_PM.png](assets/Screenshot_2020-07-17_at_12.59.57_PM.png)
+
+The decoder would be a series of de-convolutional layers which also has batch normalisation and ReLU.
+
+Now we can say that we have done our mapping or transformation when this is done we need to feed our output to the discriminator to see if the image is real or fake.
+
+But the problem here is that if the generator generates some other image which is not similar to that of the image that we have given input but is part of the training set then again the discriminator would identify this image as real.
+
+For this we need to modify the discriminator
+
+---
+
+# Pix2Pix Discriminator
+
+In order to associate the input image to the correct image we can modify the discriminator instead of looking at one image we look at pairs of images 
+
+![Pix2Pix%20and%20Cycle%20GANs%20eadf4e44ff8c4f41a9fdb7018f6fdaf2/Screenshot_2020-07-17_at_1.41.44_PM.png](assets/Screenshot_2020-07-17_at_1.41.44_PM.png)
+
+Here the discriminator would also take a look at another image to determine the error which establishes a condition in the image making a condition which gives the GAN a name conditional GAN or CGAN. Here the GAN does not make any assumption between the images but establishes relationship between the images.
+
+---
+
+# Paired Dataset
+
+As we have mentioned earlier in pix2pix the dataset is paired which is actually very difficult to achieve and required lot of manual labour. There are very few paired datasets.
+
+In cases of making something like transforming an video of a horse to zebra this is very hard to do such mapping instead we can use unpaired datasets this is where cycle GANs come into play.
+
+---
+
+# Cycle GANs
+
+Here we use a different type of way to map our images
+
+![Pix2Pix%20and%20Cycle%20GANs%20eadf4e44ff8c4f41a9fdb7018f6fdaf2/Screenshot_2020-07-17_at_3.07.56_PM.png](assets/Screenshot_2020-07-17_at_3.07.56_PM.png)
+
+We not only map the input images to outputs but also backwards this would give us a cycle consistency and less effort is required compared to paired datasets.
+
+For example if we are translating from english to french and if we translate french back to english we should get the same result.
+
